@@ -7,6 +7,8 @@ var paint_style = getComputedStyle(painting)
 canvas.width = 500
 canvas.height = 500
 
+var socket = io()
+
 // object that stores coordinates for painting pixels
 var mouse = { x: 0, y: 0 }
 
@@ -38,6 +40,20 @@ canvas.addEventListener('mouseup', function () {
 
 // function that draws while mouse is held down and moving across canvas
 var onPaint = function () {
+  socket.emit('sendArt', mouse)
   ctx.lineTo(mouse.x, mouse.y)
   ctx.stroke()
 }
+
+///////////////////////////////////
+
+canvas.addEventListener('click', () => {
+  console.log("Sent Art", mouse)
+  socket.emit('sendArt', mouse)
+})
+
+socket.on('getArt', (mouse) => {
+  console.log("Got Art", mouse)
+  ctx.lineTo(mouse.x, mouse.y)//lineTo- draw a line inbetween individual dots browser uses to render drawing so that it appears fluid
+  ctx.stroke()
+})
