@@ -1,3 +1,5 @@
+// canvas setup adapted from: https://www.html5canvastutorials.com/labs/html5-canvas-paint-application/
+
 var canvas = document.getElementById('myCanvas')
 var painting = document.getElementById('paint')
 var ctx = canvas.getContext('2d')
